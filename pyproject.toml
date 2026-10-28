@@ -1,0 +1,49 @@
+[project]
+name = "drrp_bank"
+version = "0.1.0"
+description = "Обробка та очистка даних ДРРП (Vkursi) з експортом у MS SQL"
+requires-python = ">=3.11"
+dependencies = [
+  "streamlit>=1.40",
+  "pandas>=2.2",
+  "pydantic>=2.7",
+  "pydantic-settings>=2.3",
+  "ijson>=3.3",
+  "sqlalchemy>=2.0",
+  "alembic>=1.13",
+  "pyodbc>=5.1",
+  "openpyxl>=3.1",
+  "xlsxwriter>=3.2",
+  "plotly>=5.22",
+  "loguru>=0.7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["core*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["migrations"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "SIM", "C4", "PL", "RUF"]
+ignore = ["PLR2004", "RUF001", "RUF002", "RUF003"]  # кирилиця в рядках/коментарях
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["PLR2004", "S101"]
+"app/pages/*" = ["N999"]   # кириличні імена файлів сторінок
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
